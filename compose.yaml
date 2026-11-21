@@ -1,0 +1,7 @@
+﻿services:
+  detroitrunner:
+    image: detroitrunner
+    build:
+      context: .
+      dockerfile: DetroitRunner/Dockerfile
+

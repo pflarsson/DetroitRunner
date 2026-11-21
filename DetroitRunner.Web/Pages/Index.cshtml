@@ -1,0 +1,41 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Last month's paycheck";
+}
+@section Styles {
+    <style>
+        .card { max-width: 32rem; margin: 0 auto; background: #fff; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 1px 3px rgb(0 0 0 / 0.1); }
+        h1 { font-size: 1.25rem; margin: 0 0 0.25rem; }
+        .muted { color: #78716c; margin: 0 0 1.5rem; }
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 0.4rem 0; }
+        td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+        .indent td:first-child { padding-left: 1rem; color: #57534e; }
+        .total td { border-top: 1px solid #d6d3d1; font-weight: 600; }
+        .net td { border-top: 2px solid #1c1917; font-size: 1.15rem; font-weight: 700; }
+    </style>
+}
+<div class="card">
+    <h1>Last month's paycheck</h1>
+    @if (Model.Paycheck is { } p)
+    {
+        <p class="muted">
+            Paid @IndexModel.Date(p.PayDate) &middot;
+            Pay period @IndexModel.Date(p.PeriodStart) &ndash; @IndexModel.Date(p.PeriodEnd)
+        </p>
+        <table>
+            <tr><td>Gross pay</td><td>@IndexModel.Money(p.GrossPay)</td></tr>
+            @foreach (var d in p.Deductions)
+            {
+                <tr class="indent"><td>@d.Name</td><td>&minus;@IndexModel.Money(d.Amount)</td></tr>
+            }
+            <tr class="total"><td>Total deductions</td><td>&minus;@IndexModel.Money(p.TotalDeductions)</td></tr>
+            <tr class="net"><td>Net pay</td><td>@IndexModel.Money(p.NetPay)</td></tr>
+        </table>
+    }
+    else
+    {
+        <p class="muted">No paycheck was found for last month.</p>
+    }
+</div>
