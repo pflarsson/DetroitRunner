@@ -7,7 +7,7 @@ on:
 
 env:
   ACR_NAME: detroitrunner.azurecr.io
-  IMAGE_NAME: detoritrunner
+  IMAGE_NAME: detroitrunner
 
 jobs:
   build:
